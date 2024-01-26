@@ -1,12 +1,13 @@
 package org.example.entities;
 
+import org.example.enums.EventTypes;
+
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity // <-- Mi indica che questa classe dovrà essere mappata ad una tabella del db
-@Table(name = "events") // <-- Consente di specificare il nome della tabella (Non è obbligatorio)
-public class Evento {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Evento {
     @Id // Indica che sarà la chiave primaria (obbligatorio)
     @GeneratedValue // Si usa se si vuol far gestire gli id al database
     // Altrimenti devo inserirli io manualmente ogni volta che inserisco un nuovo Evento

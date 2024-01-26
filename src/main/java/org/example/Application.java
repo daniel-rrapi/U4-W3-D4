@@ -1,8 +1,10 @@
 package org.example;
 
 import org.example.dao.EventoDAO;
-import org.example.entities.EventTypes;
-import org.example.entities.Evento;
+import org.example.entities.Concerto;
+import org.example.entities.PartitaDiCalcio;
+import org.example.enums.ConcertoTypes;
+import org.example.enums.EventTypes;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -10,30 +12,18 @@ import javax.persistence.Persistence;
 import java.time.LocalDate;
 
 public class Application {
-    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("U4-W3-D2");
+    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("U4-W3-D4");
 
     // EntityManagerFactory è l'oggetto che mi consente di creare gli EntityManager
     public static void main(String[] args) {
         EntityManager em = emf.createEntityManager();  // Entity Manager è responsabile della gestione delle interazioni col DB
         EventoDAO ed = new EventoDAO(em);
 
-        Evento concertoPippo = new Evento("Concerto pippo", LocalDate.of(2022, 12, 12), "Concerto di pippo e pluto", EventTypes.PRIVATO, 50);
+        PartitaDiCalcio lazioJuve = new PartitaDiCalcio("La coppa del nonno", LocalDate.now(), "Desc", EventTypes.PUBBLICO, 190, "Lazio", "Juventus", "Lazio", 2, 0);
+//        ed.save(lazioJuve);
 
-        // SAVE
-        ed.save(concertoPippo);
-
-        // Find
-        long id = 1;
-        Evento eventFromDB = ed.findById(id);
-        if (eventFromDB != null) {
-            System.out.println(eventFromDB);
-        } else {
-            System.out.println("Evento con id " + id + " non trovato");
-        }
-
-        // Delete
-        ed.delete(id);
-
+        Concerto concertoDiAury = new Concerto("Il concertone di aury", LocalDate.of(2025, 01, 01), "Aury si esibirà per i suoi fan", EventTypes.PUBBLICO, 10000, ConcertoTypes.POP, true);
+        ed.save(concertoDiAury);
         // A fine programma è sempre bene ricordarsi di chiudere entitymanager e entitymanagerfactory
         em.close();
         emf.close();
